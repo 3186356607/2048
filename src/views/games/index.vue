@@ -7,8 +7,8 @@ const { board: boardList } = toRefs(game);
 </script>
 <template>
   <div class="container">
-    <div class="up">上移</div>
-    <div class="down">下移</div>
+    <div class="up" @click="game.moveUp">上移</div>
+    <div class="down" @click="game.moveDown">下移</div>
     <div class="left" @click="game.moveLeft">左移</div>
     <div class="right" @click="game.moveRight">右移</div>
 
@@ -16,10 +16,12 @@ const { board: boardList } = toRefs(game);
       <template v-for="(row, x) in boardList" :key="x">
         <p
           v-for="(cell, y) in row"
-          class="item"
-          :class="`color${cell}`"
+          :class="`item color${cell} color${cell} ${
+            game.styleState ? 'fadeOutLeft' : ''
+          }`"
           :key="y"
         >
+          <!-- {{ cell }} -->
           {{ cell ? cell : "" }}
         </p>
       </template>
@@ -70,7 +72,7 @@ p {
   width: 290px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  // background-color: #bbad9f;
+  background-color: #bbad9f;
   gap: 10px;
   padding: 10px;
   border-radius: 4px;
@@ -79,44 +81,61 @@ p {
     height: 60px;
     text-align: center;
     line-height: 60px;
-    // background-color: #ccc1b2;
+    background-color: #ccc1b2;
     border-radius: 4px;
-    // color: #fff;
+    color: #fff;
     font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.5s ease;
   }
-  // .color2 {
-  //   background-color: #efe5db;
-  // }
-  // .color4 {
-  //   background-color: #ece0c8;
-  // }
-  // .color8 {
-  //   background-color: #f1b179;
-  // }
-  // .color16 {
-  //   background-color: #f59664;
-  // }
-  // .color32 {
-  //   background-color: #f67c5f;
-  // }
-  // .color64 {
-  //   background-color: #f55d3c;
-  // }
-  // .color128 {
-  //   background-color: #edce72;
-  // }
-  // .color256 {
-  //   background-color: #edcc61;
-  // }
-  // .color512 {
-  //   background-color: #edc850;
-  // }
-  // .color1024 {
-  //   background-color: #d4b038;
-  // }
-  // .color2048 {
-  //   background-color: #b89c32;
-  // }
+  .color2 {
+    background-color: #efe5db;
+  }
+  .color4 {
+    background-color: #ece0c8;
+  }
+  .color8 {
+    background-color: #f1b179;
+  }
+  .color16 {
+    background-color: #f59664;
+  }
+  .color32 {
+    background-color: #f67c5f;
+  }
+  .color64 {
+    background-color: #f55d3c;
+  }
+  .color128 {
+    background-color: #edce72;
+  }
+  .color256 {
+    background-color: #edcc61;
+  }
+  .color512 {
+    background-color: #edc850;
+  }
+  .color1024 {
+    background-color: #d4b038;
+  }
+  .color2048 {
+    background-color: #b89c32;
+  }
+}
+
+/*base code*/
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+.animated.infinite {
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+.animated.hinge {
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
 }
 </style>
